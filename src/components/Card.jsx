@@ -6,7 +6,7 @@ export default function Card() {
     <div className="cards">
       {data.restaurants.map((item, key) => {
         return (
-          <Link to={`/restaurant/${item.id}`}>
+          <Link to={`/restaurant/${item.id}`} key={key}>
             <div className="restaurant">
               <img src={item.image} alt="" />
               <div className="about">
