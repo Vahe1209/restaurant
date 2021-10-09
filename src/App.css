@@ -9,10 +9,13 @@
 .cards {
   display: flex;
   flex-direction: column;
+  width: 60%;
 }
 
 .restaurant {
   display: flex;
+  justify-content: space-around;
+  align-items: center;
   margin: 20px;
   padding: 5px;
   border: 1px solid black;
