@@ -7,7 +7,7 @@ const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geomet
 
 export default function WrappedMap() {
   return (
-    <div style={{ minWidth: "30%" }}>
+    <div style={{ minWidth: "40%" }}>
       <Wrap
         googleMapURL={mapURL}
         loadingElement={<div style={{ height: "100vh", width: "100%" }} />}

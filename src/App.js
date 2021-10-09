@@ -1,12 +1,18 @@
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-import Card from "./components/Card";
-import WrappedMap from "./components/WrappedMap";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
     <div className="App">
-      <WrappedMap />
-      <Card />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route path="/restaurant/:id">asdasd</Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
