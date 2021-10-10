@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
-import data from "../data.json";
-import MyRating from "./MyRating";
+// import MyRating from "./MyRating";
 
-export default function RMap({ centerId }) {
+export default function RMap({ centerId, data }) {
   const [centerPosition, setCenterPosition] = useState([
     40.1776121, 44.5125849,
   ]);
+  const [isHover, setIsHover] = useState(false);
   useEffect(() => {
-    const clickedData = data.restaurants.find((item) => item.id === centerId);
+    const clickedData =
+      data && data.restaurantList.find((item) => item._id === centerId);
     if (clickedData) {
-      setCenterPosition(clickedData.geometry);
+      setCenterPosition([
+        clickedData.geometry.latitude,
+        clickedData.geometry.longitude,
+      ]);
     }
-  }, [centerId]);
+  }, [centerId, data]);
 
   return (
     <YMaps>
@@ -22,32 +26,34 @@ export default function RMap({ centerId }) {
           height="100vh"
           width="700px"
         >
-          {data.restaurants.map((item, idx) => {
-            return (
-              <Placemark
-                geometry={item.geometry}
-                key={idx}
-                onMouseEnter={(e) => {
-                  return (
-                    <div
-                      style={{
-                        position: "absolute",
-                        zIndex: "5",
-                        backgroundColor: "black",
-                        width: "300px",
-                      }}
-                    >
-                      <div>{item.name}</div>
-                      <img src={item.image} alt="" />
-                      <div>{MyRating}</div>
-                    </div>
-                  );
-                }}
-              />
-            );
-          })}
+          {data &&
+            data.restaurantList.map((item, idx) => {
+              return (
+                <Placemark
+                  geometry={[item.geometry.latitude, item.geometry.longitude]}
+                  key={idx}
+                  onClick={(e) => setIsHover(!isHover)}
+                />
+              );
+            })}
         </Map>
       </div>
     </YMaps>
   );
 }
+// {
+//   isHover && (
+//     <div
+//       style={{
+//         position: "relative",
+//         zIndex: "5",
+//         backgroundColor: "black",
+//         width: "300px",
+//       }}
+//     >
+//       <div>{item.name}</div>
+//       <img src={item.image} alt="" />
+//       <div>{MyRating}</div>
+//     </div>
+//   );
+// }

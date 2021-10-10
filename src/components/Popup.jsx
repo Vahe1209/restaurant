@@ -1,8 +1,18 @@
+import axios from "axios";
 import { useState } from "react";
+import { useParams } from "react-router";
 
-export default function Popup({ closePopup, setComment }) {
+export default function Popup({ closePopup, addComments }) {
   const [name, setName] = useState("");
   const [commentText, setCommentText] = useState("");
+  const { id } = useParams();
+
+  const handleSubmitClick = () => {
+    const article = { author: name, commentText, restaurantId: id };
+    axios.post("http://localhost:5000/setComment", article);
+    addComments((prevState) => [...prevState, { name, commentText }]);
+    closePopup();
+  };
 
   return (
     <div className="popup">
@@ -36,17 +46,8 @@ export default function Popup({ closePopup, setComment }) {
         <button
           className="popupButton"
           style={{ backgroundColor: "green" }}
-          disabled={!name && !commentText}
-          onClick={(e) => {
-            setComment((prevState) => [
-              ...prevState,
-              {
-                name,
-                commentText,
-              },
-            ]);
-            closePopup();
-          }}
+          disabled={!(name && commentText)}
+          onClick={handleSubmitClick}
         >
           Submit
         </button>
